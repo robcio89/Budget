@@ -1,14 +1,13 @@
 #include "authorizer_file_test.h"
-#include "../gtest/include/gtest/gtest.h"
 
 TEST_F(authorizer_file_test, OpenFileDB)
 {
-	EXPECT_THROW(authorizer_file test_authorizer(file_name_wrong), exception);
+	EXPECT_THROW(authorizer_file test_authorizer(file_name_wrong), std::exception);
 
 	try {
 		authorizer_file test_authorizer(file_name_wrong);
 	}
-	catch (exception& exc) {
+	catch (std::exception& exc) {
 		std::string expection_msg = "Could not open file: " + file_name_wrong;
 		EXPECT_STREQ(exc.what(), expection_msg.c_str());
 	}
@@ -38,8 +37,8 @@ TEST_F(authorizer_file_test, login_and_password_ok)
 
 TEST_F(authorizer_file_test, create_account_new_login_and_password)
 {
-	string new_login = "some_new_login";
-	string new_password = "some_new_password";
+	std::string new_login = "some_new_login";
+	std::string new_password = "some_new_password";
 
 	EXPECT_EQ(authorizer->create_account(new_login, new_password), 0);
 }

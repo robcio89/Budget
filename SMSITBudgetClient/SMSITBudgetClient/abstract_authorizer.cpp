@@ -14,28 +14,28 @@ void authorizer_file::open_file_db(const std::string& file_name)
 	if (!m_file_db.good())
 	{
 		std::string msg = "Could not open file: " + file_name;
-		throw exception(msg.c_str());
+		throw std::exception(msg.c_str());
 	}
 }
 
 void authorizer_file::load_file_db(const std::string& file_name)
 {
-	string line;
+	std::string line;
 	while (getline(m_file_db, line))
 	{
 		std::istringstream temp_istring_stream(line);
-		string name, password;
+		std::string name, password;
 
 		if (!(temp_istring_stream >> name >> password))
 		{
-			throw exception("DB is corrupted!");
+			throw std::exception("DB is corrupted!");
 		}
 
 		accounts.insert(make_pair(name, password));
 	}
 }
 
-int authorizer_file::login(const string& name, const string& password)
+int authorizer_file::login(const std::string& name, const std::string& password)
 {
 	if (accounts.empty())
 	{
@@ -57,7 +57,7 @@ int authorizer_file::login(const string& name, const string& password)
 	return 0;
 }
 
-int authorizer_file::create_account(const string& name, const string& password)
+int authorizer_file::create_account(const std::string& name, const std::string& password)
 {
 	if (name.size() < 5)
 	{

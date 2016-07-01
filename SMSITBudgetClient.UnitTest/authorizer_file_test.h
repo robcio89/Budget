@@ -1,6 +1,7 @@
 #pragma once
-#include "../gtest/include/gtest/\gtest.h"
+#include <gtest/gtest.h>
 #include "../SMSITBudgetClient/SMSITBudgetClient/abstract_authorizer.h"
+#include <memory>
 
 struct authorizer_file_test : public testing::Test
 {
@@ -14,7 +15,7 @@ public:
 		, file_name_wrong("wrong_name.smsitdb")
 	{
 		prepareFileDbs();
-		authorizer = new authorizer_file(file_name_fine);
+		authorizer = std::make_unique<authorizer_file>(file_name_fine);
 	}
 
 	virtual ~authorizer_file_test()
@@ -27,7 +28,7 @@ public:
 	void prepareFineFileDb();
 	void prepareWrongFileDb();
 
-	abstract_authorizer* authorizer;
+	std::unique_ptr<abstract_authorizer> authorizer;
 	std::string login_fine, password_fine;
 	std::string login_wrong, password_wrong;
 	std::string file_name_fine, file_name_wrong;
