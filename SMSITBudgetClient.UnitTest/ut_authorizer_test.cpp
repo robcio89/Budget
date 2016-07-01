@@ -43,8 +43,23 @@ TEST_F(authorizer_file_test, create_account_new_login_and_password)
 
 	EXPECT_EQ(authorizer->create_account(new_login, new_password), 0);
 }
-//	EXPECT_EQ(authorizer->create_account(login_wrong, password_fine), 1);
-//	EXPECT_EQ(authorizer->create_account(login_fine, password_wrong), 2);
-//	EXPECT_EQ(authorizer->create_account(login_wrong, password_wrong), 1);
-//	EXPECT_EQ(authorizer->create_account(login_fine, password_fine), 3);
-//}
+
+TEST_F(authorizer_file_test, create_account_login_wrong_password_ok)
+{
+	EXPECT_EQ(authorizer->create_account(login_wrong, password_fine), 1);
+}
+
+TEST_F(authorizer_file_test, create_account_login_ok_password_wrong)
+{
+	EXPECT_EQ(authorizer->create_account(login_fine, password_wrong), 2);
+}
+
+TEST_F(authorizer_file_test, create_account_login_and_password_wrong)
+{
+	EXPECT_EQ(authorizer->create_account(login_wrong, password_wrong), 1);
+}
+
+TEST_F(authorizer_file_test, create_account_login_and_password_ok)
+{
+	EXPECT_EQ(authorizer->create_account(login_fine, password_fine), 3);
+}
